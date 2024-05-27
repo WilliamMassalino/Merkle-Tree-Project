@@ -6,20 +6,23 @@ const port = 1225;
 const app = express();
 app.use(express.json());
 
-// TODO: hardcode a merkle root here representing the whole nice list
-// paste the hex string in here, without the 0x prefix
-const MERKLE_ROOT = '';
+// Hardcode a merkle root aqui representando toda a nice list
+const MERKLE_ROOT = 'ddd59a2ffccddd60ff47993312821cd57cf30f7f14fb82937ebe2c4dc78375aa';
 
 app.post('/gift', (req, res) => {
-  // grab the parameters from the front-end here
-  const body = req.body;
+  // Pegar os parâmetros do front-end aqui
+  const { name, proof } = req.body;
 
-  // TODO: prove that a name is in the list 
-  const isInTheList = false;
-  if(isInTheList) {
+  console.log(`Received name: ${name}`);
+  console.log(`Received proof: ${JSON.stringify(proof)}`);
+
+  // Provar que um nome está na lista
+  const isInTheList = verifyProof(proof, name, MERKLE_ROOT);
+  console.log(`Is in the list: ${isInTheList}`);
+
+  if (isInTheList) {
     res.send("You got a toy robot!");
-  }
-  else {
+  } else {
     res.send("You are not on the list :(");
   }
 });

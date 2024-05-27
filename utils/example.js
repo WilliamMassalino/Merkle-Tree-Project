@@ -2,18 +2,20 @@ const MerkleTree = require('./MerkleTree');
 const niceList = require('./niceList');
 const verifyProof = require('./verifyProof');
 
-// create the merkle tree for the whole nice list
+// criar o Merkle Tree para a lista completa
 const merkleTree = new MerkleTree(niceList);
 
-// get the root
+// obter a raiz
 const root = merkleTree.getRoot();
+console.log(`Merkle Root: ${root}`);
 
-// find the proof that norman block is in the list 
+// encontrar a prova de que Norman Block está na lista
 const name = 'Norman Block';
 const index = niceList.findIndex(n => n === name);
 const proof = merkleTree.getProof(index);
 
-// verify proof against the Merkle Root
-console.log( verifyProof(proof, name, root) ); // true, Norman Block is in the list!
+// verificar a prova contra a Merkle Root
+console.log(verifyProof(proof, name, root)); // true, Norman Block está na lista!
 
-// TRY IT OUT: what happens if you try a name not in the list, or a fake proof?
+// Exibir a Merkle Root
+console.log(`Merkle Root: ${root}`);
